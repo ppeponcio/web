@@ -15,9 +15,10 @@ use yii\widgets\ActiveForm;
     <fieldset>
         <legend>Compra</legend>
 
-         <?= Html::activeDropDownList($model->compra, 'idPresentacion',$model->compra->comboPresentacion, [
-           'id' => 'compra-idpresentacion'
-         ]) ?>
+         <?=
+         $form->field($model->compra, 'idPresentacion')->dropDownList($model->compra->comboPresentacion,['disabled' => true,])
+
+         ?>
     </fieldset>
 
     <fieldset>
@@ -70,14 +71,6 @@ use yii\widgets\ActiveForm;
 
         <?php ob_start(); // output buffer the javascript to register later ?>
         <script>
-            $('#compra-idpresentacion').on('change', function () {
-              var a = document.getElementById("compra-idpresentacion");
-              var cookievalue=a.options[a.selectedIndex].value;
-              document.cookie="yolo=" + cookievalue;
-              var name="yolo";
-              window.alert(cookievalue);
-            });
-
             // add ticket button
             var ticket_k = <?php echo isset($key) ? str_replace('new', '', $key) : 0; ?>;
             $('#compra-new-ticket-button').on('click', function () {

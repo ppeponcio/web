@@ -4,6 +4,8 @@ namespace backend\controllers;
 
 use Yii;
 use app\models\Presentacion;
+use app\models\User;
+use app\models\Cadena;
 use app\models\PresentacionSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -57,9 +59,16 @@ class PresentacionController extends Controller
     public function actionView($id)
     {
       if(Yii::$app ->user->can('ver-presentacion')){
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        $model = $this->findModel($id);
+        $usuario = User::find()->where(['id' => Yii::$app->user->id])->one();
+        $cadena = Cadena::findBySql('SELECT * FROM `cadena` WHERE idCadena = (SELECT idCadena FROM cine WHERE idCine = (SELECT idCine FROM sala WHERE idSala = '.$model->idSala.'))')->one();
+        if($usuario->idCadena==$cadena->idCadena){
+          return $this->render('view', [
+              'model' => $this->findModel($id),
+          ]);
+        }else{
+          throw new ForbiddenHttpException;
+        }
       }else{
         throw new ForbiddenHttpException;
 
@@ -99,14 +108,20 @@ class PresentacionController extends Controller
     {
       if(Yii::$app ->user->can('editar-presentacion')){
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idPresentacion]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        $usuario = User::find()->where(['id' => Yii::$app->user->id])->one();
+        $cadena = Cadena::findBySql('SELECT * FROM `cadena` WHERE idCadena = (SELECT idCadena FROM cine WHERE idCine = (SELECT idCine FROM sala WHERE idSala = '.$model->idSala.'))')->one();
+        if($usuario->idCadena==$cadena->idCadena){
+          if ($model->load(Yii::$app->request->post()) && $model->save()) {
+              return $this->redirect(['view', 'id' => $model->idPresentacion]);
+          } else {
+              return $this->render('update', [
+                  'model' => $model,
+              ]);
+          }
+        }else{
+          throw new ForbiddenHttpException;
         }
+
       }else{
         throw new ForbiddenHttpException;
 

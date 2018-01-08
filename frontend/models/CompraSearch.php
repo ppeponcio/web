@@ -18,7 +18,7 @@ class CompraSearch extends Compra
     public function rules()
     {
         return [
-            [['idCompra', 'cantidad', 'idUsuario'], 'integer'],
+            [['idCompra', 'cantidad', 'idUsuario', 'idPresentacion'], 'integer'],
             [['subtotalCompra'], 'number'],
             [['createdAt'], 'safe'],
         ];
@@ -42,7 +42,7 @@ class CompraSearch extends Compra
      */
     public function search($params)
     {
-        $query = Compra::find();
+        $query = Compra::find()->where(['idUsuario'=>Yii::$app->user->id]);
 
         // add conditions that should always apply here
 
@@ -64,6 +64,7 @@ class CompraSearch extends Compra
             'cantidad' => $this->cantidad,
             'subtotalCompra' => $this->subtotalCompra,
             'idUsuario' => $this->idUsuario,
+            'idPresentacion' => $this->idPresentacion,
             'createdAt' => $this->createdAt,
         ]);
 

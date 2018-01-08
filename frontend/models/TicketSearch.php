@@ -18,7 +18,7 @@ class TicketSearch extends Ticket
     public function rules()
     {
         return [
-            [['idTicket', 'idAsiento', 'idPresentacion', 'idCompra'], 'integer'],
+            [['idTicket', 'idAsiento', 'idCompra'], 'integer'],
         ];
     }
 
@@ -60,7 +60,6 @@ class TicketSearch extends Ticket
         $query->andFilterWhere([
             'idTicket' => $this->idTicket,
             'idAsiento' => $this->idAsiento,
-            'idPresentacion' => $this->idPresentacion,
             'idCompra' => $this->idCompra,
         ]);
 

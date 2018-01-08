@@ -105,8 +105,13 @@ class Presentacion extends \yii\db\ActiveRecord
         return $this->hasOne(Sala::className(), ['idSala' => 'idSala']);
     }
     public function getcomboSala() {
-        $models = Sala::find()->asArray()->all();
-        return ArrayHelper::map($models, 'idSala', 'nombreSala');
+        $usuario = User::find()->where(['id' => Yii::$app->user->id])->one();
+        $models = Sala::findBySql('SELECT * FROM sala WHERE idCine IN (SELECT idCine FROM cine WHERE idCadena = '.$usuario->idCadena.')')->asArray()->all();
+        //return ArrayHelper::map($models, 'idSala', 'nombreSala');
+       return ArrayHelper::map($models, 'idSala',
+        function($model, $defaultValue) {
+        return $model['nombreSala'].' - '.Cine::find()->where(['idCine'=>$model['idCine']])->one()->nombreCine;
+      });
     }
     public function getcomboPelicula() {
         $models = Pelicula::find()->asArray()->all();

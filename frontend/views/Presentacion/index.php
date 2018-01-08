@@ -15,9 +15,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
+    <!--<p>
         <?= Html::a('Create Presentacion', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    </p>-->
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -31,8 +31,23 @@ $this->params['breadcrumbs'][] = $this->title;
             'idHorario0.nombreHorario',
             'idIdioma0.nombreIdioma',
             'idFormato0.nombreFormato',
-
-            ['class' => 'yii\grid\ActionColumn'],
+            //'idPelicula0.poster',
+            [
+              'class' => 'yii\grid\ActionColumn',
+              'template' => '{view} {compra}',
+              'buttons' => [
+                'compra' => function($url, $model, $key) {
+                    return Html::a(
+                      'Comprar',
+                      ['compra/create', 'idPresentacion' => $key],
+                      [
+                          'title' => 'Download',
+                          'data-pjax' => '0',
+                      ]
+                    );
+                }
+              ]
+            ],
         ],
     ]); ?>
 </div>

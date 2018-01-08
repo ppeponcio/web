@@ -41,7 +41,9 @@ class PresentacionSearch extends Presentacion
      */
     public function search($params)
     {
-        $query = Presentacion::find();
+        $time = new \DateTime('now');
+        $today = $time->format('Y-m-d');
+        $query = Presentacion::find()->where(['>=','fecha',$today]);
 
         // add conditions that should always apply here
 

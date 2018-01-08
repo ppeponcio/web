@@ -3,7 +3,7 @@ use app\models\Ticket;
 use yii\helpers\Html;
 ?>
 <td>
-    <?= $form->field($ticket, 'idAsiento')->dropDownList($ticket->getcomboAsientos(Yii::$app->getRequest()->getCookies()->getValue('yolo', (isset($_COOKIE['yolo']))? $_COOKIE['yolo']: '60')),[
+    <?= $form->field($ticket, 'idAsiento')->dropDownList($ticket->getcomboAsientos(Yii::$app->getRequest()->getQueryParam('idPresentacion')),[
         'id' => "Tickets_{$key}_idAsiento",
         'name' => "Tickets[$key][idAsiento]",
     ])->label(false) ?>
