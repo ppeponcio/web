@@ -14,8 +14,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'idAsiento')->textInput() ?>
 
-    <?= $form->field($model, 'idPresentacion')->textInput() ?>
-
     <?= $form->field($model, 'idCompra')->textInput() ?>
 
     <div class="form-group">

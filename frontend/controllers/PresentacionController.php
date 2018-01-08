@@ -8,6 +8,7 @@ use app\models\PresentacionSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * PresentacionController implements the CRUD actions for Presentacion model.
@@ -20,6 +21,53 @@ class PresentacionController extends Controller
     public function behaviors()
     {
         return [
+          'access' => [
+              'class' => AccessControl::className(),
+              'only' => ['create', 'delete','view','index','update'],
+              'rules' => [
+                  [
+                      'actions' => ['create'],
+                      'allow' => false,
+                      'roles' => ['@'],
+                  ],
+                  [
+                      'actions' => ['delete'],
+                      'allow' => false,
+                      'roles' => ['@'],
+                  ],
+                  [
+                      'actions' => ['update'],
+                      'allow' => false,
+                      'roles' => ['@'],
+                  ],
+                  [
+                      'actions' => ['create'],
+                      'allow' => false,
+                      'roles' => ['?'],
+                  ],
+                  [
+                      'actions' => ['delete'],
+                      'allow' => false,
+                      'roles' => ['?'],
+                  ],
+                  [
+                      'actions' => ['update'],
+                      'allow' => false,
+                      'roles' => ['?'],
+                  ],
+                  [
+                      'actions' => ['view'],
+                      'allow' => true,
+                      'roles' => ['@'],
+                  ],
+                  [
+                      'actions' => ['index'],
+                      'allow' => true,
+                      'roles' => ['@'],
+                  ],
+
+              ],
+          ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Presentacions', 'url' => ['index']
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="presentacion-view">
-
+  <!--
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
@@ -24,17 +24,51 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
-
+  -->
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'idPresentacion',
-            'idPelicula',
-            'idSala',
+            //'idPresentacion',
+            ['label' => 'Titulo',
+              'attribute' => 'idPelicula0.tituloPelicula',
+            ],
+            'idPelicula0.sinopsis',
+            //'idPelicula0.path',
+            ['label' => 'Sala',
+              'attribute' => 'idSala0.nombreSala',
+            ],
+            [
+                'label' => 'Poster',
+                'attribute'=>'idPelicula0.path',
+                'value'=> '/'.$model->idPelicula0->path,
+                'format' => ['image',['width'=>'120']],
+            ],
+            ['label' => 'Cadena',
+              'attribute' => 'idSala0.idCine0.idCadena0.nombreCadena',
+            ],
+            ['label' => 'Cine',
+              'attribute' => 'idSala0.idCine0.nombreCine',
+            ],
+            ['label' => 'Direccion',
+              'attribute' => 'idSala0.idCine0.direccionCine',
+            ],
             'fecha',
-            'idHorario',
-            'idIdioma',
-            'idFormato',
+            ['label' => 'Horario',
+              'attribute' => 'idHorario0.nombreHorario',
+            ],
+            ['label' => 'Idioma',
+              'attribute' => 'idIdioma0.nombreIdioma',
+            ],
+            ['label' => 'Subitulada',
+            'format'=>'raw',
+              'value' => function($model, $key) { return $model->idIdioma0->subtitulos == 0 ? 'No' : 'Si';},
+            ],
+            ['label' => 'Formato',
+              'attribute' => 'idFormato0.nombreFormato',
+            ],
+            ['label' => 'Precio',
+              'attribute' => 'idFormato0.idPrecio0.valorPrecio',
+            ],
         ],
     ]) ?>
 

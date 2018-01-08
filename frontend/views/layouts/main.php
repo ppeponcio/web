@@ -29,7 +29,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
+        'brandLabel' => 'Cines Tampico',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -43,7 +43,9 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
         $menuItems[] = ['label' => 'Presentaciones', 'url' => ['/presentacion/index']];
-        $menuItems[] = ['label' => 'Compra', 'url' => ['/compra/create']];
+        $menuItems[] = ['label' => 'Mis Compras', 'url' => ['/compra/index']];
+        //$menuItems[] = ['label' => 'Tickets', 'url' => ['/ticket/index']];
+        //$menuItems[] = ['label' => 'Compra', 'url' => ['/compra/create']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(

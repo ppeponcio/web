@@ -14,6 +14,7 @@ use Yii;
  * @property string $fechaEstreno
  * @property integer $idGenero
  * @property integer $idDirector
+ * @property string $path
  *
  * @property Actor[] $actors
  * @property Persona[] $idPersonas
@@ -42,6 +43,7 @@ class Pelicula extends \yii\db\ActiveRecord
             [['fechaEstreno'], 'safe'],
             [['tituloPelicula'], 'string', 'max' => 150],
             [['sinopsis'], 'string', 'max' => 300],
+            [['path'], 'string', 'max' => 400],
             [['idDirector'], 'exist', 'skipOnError' => true, 'targetClass' => Persona::className(), 'targetAttribute' => ['idDirector' => 'idPersona']],
             [['idGenero'], 'exist', 'skipOnError' => true, 'targetClass' => Genero::className(), 'targetAttribute' => ['idGenero' => 'idGenero']],
         ];
@@ -60,6 +62,7 @@ class Pelicula extends \yii\db\ActiveRecord
             'fechaEstreno' => 'Fecha Estreno',
             'idGenero' => 'Id Genero',
             'idDirector' => 'Id Director',
+            'path' => 'Path',
         ];
     }
 

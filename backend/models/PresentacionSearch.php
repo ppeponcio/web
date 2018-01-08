@@ -6,6 +6,9 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Presentacion;
+use app\models\Sala;
+use app\models\Cine;
+use app\models\User;
 
 /**
  * PresentacionSearch represents the model behind the search form about `app\models\Presentacion`.
@@ -41,7 +44,13 @@ class PresentacionSearch extends Presentacion
      */
     public function search($params)
     {
-        $query = Presentacion::find();
+
+        $usuario = User::find()->where(['id' => Yii::$app->user->id])->one();
+        if($usuario->idCadena !== null){
+          $query = Presentacion::findBySql('SELECT * from presentacion WHERE idSala IN (SELECT idSala FROM sala WHERE idCine IN (SELECT idCine FROM cine WHERE idCadena = '.$usuario->idCadena.'))');
+        }else{
+          $query = Presentacion::find();
+        }
 
         // add conditions that should always apply here
 

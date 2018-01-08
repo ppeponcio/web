@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Cine;
+use app\models\User;
 
 /**
  * CineSearch represents the model behind the search form about `app\models\Cine`.
@@ -41,7 +42,13 @@ class CineSearch extends Cine
      */
     public function search($params)
     {
-        $query = Cine::find();
+        $usuario = User::find()->where(['id' => Yii::$app->user->id])->one();
+        if($usuario->idCadena !== null){
+          $query = Cine::find()->where(['idCadena' => $usuario->idCadena]);
+        }else{
+          $query = Cine::find();
+        }
+
 
         // add conditions that should always apply here
 
